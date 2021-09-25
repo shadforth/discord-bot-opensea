@@ -47,8 +47,8 @@ export default class Bot {
     const priceEthFixed = priceEth.toFixed(this.NUM_DECIMALS);
     const priceUsdFixed = priceUsd.toFixed(this.NUM_DECIMALS);
     const timestampLocal = moment(moment.utc(sale.created_date)).local().toDate();
-    const buyer = sale.winner_account.user.username ?? this.getShortAddress(sale.winner_account.address);
-    const seller = sale.seller.user.username ?? this.getShortAddress(sale.seller.address);
+    const buyer = sale.winner_account.user?.username || this.getShortAddress(sale.winner_account.address);
+    const seller = sale.seller.user?.username || this.getShortAddress(sale.seller.address);
 
     const messageEmbed = new MessageEmbed()
       .setColor("#0099ff")
