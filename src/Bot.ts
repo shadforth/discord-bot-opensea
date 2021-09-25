@@ -5,10 +5,10 @@ import DiscordClient from "./Discord.js";
 import OpenSeaClient from "./OpenSea.js";
 
 interface Config {
-  openSeaAddress: string;
-  openSeaCollection: string;
+  openSeaContractAddress: string;
+  openSeaCollectionSlug: string;
   discordToken: string;
-  discordChannel: string;
+  discordChannelId: string;
 }
 
 interface Sale {
@@ -30,8 +30,8 @@ export default class Bot {
 
   constructor(config: Config) {
     this.discordToken = config.discordToken;
-    this.discordClient = new DiscordClient(config.discordChannel);
-    this.openSeaClient = new OpenSeaClient(config.openSeaAddress, config.openSeaCollection);
+    this.discordClient = new DiscordClient(config.discordChannelId);
+    this.openSeaClient = new OpenSeaClient(config.openSeaContractAddress, config.openSeaCollectionSlug);
   }
 
   public async run() {

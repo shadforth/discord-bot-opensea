@@ -8,9 +8,9 @@ export default class OpenSeaClient {
   private readonly collectionSlug: string;
   private readonly assetContractAddress: string;
 
-  constructor(collectionSlug: string, assetContractAddress: string) {
-    this.collectionSlug = collectionSlug;
+  constructor(assetContractAddress: string, collectionSlug: string) {
     this.assetContractAddress = assetContractAddress;
+    this.collectionSlug = collectionSlug;
   }
 
   public async fetchSales() {
@@ -19,7 +19,6 @@ export default class OpenSeaClient {
       method: "GET",
       headers: {
         Accept: "application/json",
-        //"X-API-KEY": process.env.OPENSEA_API_KEY,
       },
     };
     const lastHour: number = Math.round(new Date().getTime() / 1000) - 3_600;
