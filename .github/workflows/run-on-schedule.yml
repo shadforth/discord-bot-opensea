@@ -1,0 +1,31 @@
+name: Run build on a schedule
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    # Runs hourly (see crontab.guru)
+    - cron: "0 * * * *"
+
+jobs:
+  build:
+    name: Trigger install and build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - shell: bash
+        env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID }}
+          OPENSEA_ASSET_CONTRACT_ADDRESS: ${{ secrets.OPENSEA_ASSET_CONTRACT_ADDRESS }}
+          OPENSEA_COLLECTION_SLUG: ${{ secrets.OPENSEA_COLLECTION_SLUG }}
+        run: |
+          npm install
+          npm start
